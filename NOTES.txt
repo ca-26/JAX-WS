@@ -1,0 +1,134 @@
+#################################
+SCHEMA VALIDATION ERROR HANDLER :
+http://one-size-doesnt-fit-all.blogspot.com/2009/04/jax-ws-schemavalidation-custom-handler.html
+
+  @WebService
+  @SchemaValidation(handler = SchemaValidationErrorHandler.class)
+  public class TestWS extends SpringBeanAutowiringSupport {
+
+    @Resource
+    WebServiceContext wsContext;
+
+    @WebMethod(action = "findById")
+    public TestDTO findById(@WebParam(name = "id") @XmlElement(required = true, nillable = false) Long id) throws RemoteException {
+      handleSchemaValidationExceptions();
+
+      :
+      :
+    }
+
+    /** Throw an exception if there is a Schema Validation Error during parsing xml SOAP request. */
+    private void handleSchemaValidationExceptions() throws RemoteException {
+      MessageContext messageContext = wsContext.getMessageContext();
+
+      SAXParseException fatalErrorException = (SAXParseException)messageContext.get(SchemaValidationErrorHandler.FATAL_ERROR);
+      if ( fatalErrorException != null )
+        throw new RemoteException(fatalErrorException.getMessage());
+
+      SAXParseException errorException	  = (SAXParseException)messageContext.get(SchemaValidationErrorHandler.ERROR);
+      if ( errorException != null )
+        throw new RemoteException(errorException.getMessage());
+
+      //SAXParseException warningException	  = (SAXParseException)messageContext.get(SchemaValidationErrorHandler.WARNING);
+      //if ( warningException != null )
+      //	throw new RemoteException(warningException.getMessage());
+    }
+#################################
+
+#################################
+STATEFULL WS:
+https://docs.oracle.com/cd/E14571_01/web.1111/e13734/stateful.htm#WSADV236
+#################################
+
+#################################
+WS SECURE TOKEN CUSTOM:
+https://docs.oracle.com/cd/E19575-01/820-3746/ghhsk/index.html
+#################################
+
+#################################
+JSON WebToken:
+https://wstutorial.com/misc/jwt-java-verify.html
+
+  Used technologies
+
+  JDK 1.8
+  Maven 3.2
+  Maven dependencies: io.jsonwebtoken 0.7.0 + junit 
+
+  Maven dependencies
+
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt</artifactId>
+        <version>0.7.0</version>
+    </dependency>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+    </dependency>	
+
+  Test class
+
+  import static org.junit.Assert.assertTrue;
+  import java.util.Date;
+  import org.junit.Test;
+  import io.jsonwebtoken.Claims;
+  import io.jsonwebtoken.Jws;
+  import io.jsonwebtoken.Jwts;
+  import io.jsonwebtoken.SignatureAlgorithm;
+
+  public class JwtTest {
+
+    @Test
+    public void testJWT() {
+      String token = generateJwtToken();
+      assertTrue(token != null);
+      System.out.println(token);
+      printStructure(token);
+		printBody(token);
+	}
+
+	@SuppressWarnings("deprecation")
+	private String generateJwtToken() {
+		String token = Jwts.builder().setSubject("adam")
+				.setExpiration(new Date(2018, 1, 1))
+				.setIssuer("info@wstutorial.com")
+				.claim("groups", new String[] { "user", "admin" })
+				// HMAC using SHA-512  and 12345678 base64 encoded
+				.signWith(SignatureAlgorithm.HS512, "MTIzNDU2Nzg=").compact();
+		return token;
+	}
+
+	private void printStructure(String token) {
+		Jws parseClaimsJws = Jwts.parser().setSigningKey("MTIzNDU2Nzg=").parseClaimsJws(token);
+
+		System.out.println("Header     : " + parseClaimsJws.getHeader());
+		System.out.println("Body       : " + parseClaimsJws.getBody());
+		System.out.println("Signature  : " + parseClaimsJws.getSignature());
+	}
+	
+	private void printBody(String token) {
+		Claims body = Jwts.parser().setSigningKey("MTIzNDU2Nzg=").parseClaimsJws(token).getBody();
+
+		System.out.println("Issuer     : " + body.getIssuer());
+		System.out.println("Subject    : " + body.getSubject());
+		System.out.println("Expiration : " + body.getExpiration());
+	}
+
+}
+
+Result
+
+
+eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZGFtIiwiZXhwIjo2MTQ3NTU4MzYwMCwiaXNzIjoiaW5mb0B3c3R1dG9yaWFsLmNvbSIsImdyb3VwcyI6WyJ1c2VyIiwiYWRtaW4iXX0.8iUPqknes2PM9kyMOjOKyW8qK2oQ_xXvO4rFM3T101kNGqpbMOmWC6hpgST-fCzjH_1mWcw_zb1xk97izvxyqQ
+Header     : {alg=HS512}
+Body       : {sub=adam, exp=61475583600, iss=info@wstutorial.com, groups=[user, admin]}
+Signature  : 8iUPqknes2PM9kyMOjOKyW8qK2oQ_xXvO4rFM3T101kNGqpbMOmWC6hpgST-fCzjH_1mWcw_zb1xk97izvxyqQ
+Issuer     : info@wstutorial.com
+Subject    : adam
+Expiration : Fri Feb 01 00:00:00 CET 3918
+
+
+
+
+
