@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
+
+	<endpoint name="EmployeeService" url-pattern="/EmployeeService" implementation="tr.com.ca.ws.employee.EmployeeServiceImpl" />
+	
+<!-- 	<endpoint name="EmployeeService" url-pattern="/EmployeeService" implementation="tr.com.ca.ws.employee.EmployeeServiceImpl"  -->
+<!-- 			  wsdl="WEB-INF/wsdl/EmployeeService.wsdl" -->
+<!-- 			  service="{http://ws.ca.com.tr}EmployeeService" -->
+<!-- 			  port="{http://ws.ca.com.tr}EmployeeServicePort"/> -->
+
+
+<!-- 		<endpoint name="fromwsdl" -->
+<!-- 			implementation="test.add.service.TestaddImpl" -->
+<!-- 			wsdl="WEB-INF/wsdl/testadd.wsdl" -->
+<!-- 			service="{http://test.add.service}testadd" -->
+<!-- 			port="{http://test.add.service}testaddSOAP" url-pattern="/testadd" /> -->
+
+
+</endpoints>

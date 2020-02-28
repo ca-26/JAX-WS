@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.tr.webservice</groupId>
+	<artifactId>JaxWsBottomUp</artifactId>
+	
+	<parent>
+		<groupId>org.ca.main</groupId>
+		<artifactId>main</artifactId>
+		<version>${project.version}</version>
+		<relativePath>../main/pom.xml</relativePath>
+	</parent>
+
+<!-- 	<packaging>war</packaging> -->
+<!-- 	<version>0.0.1-SNAPSHOT</version> -->
+<!-- 	<name>JaxWsBottomUp Maven Webapp</name> -->
+<!-- 	<url>http://maven.apache.org</url> -->
+
+	<properties>
+		<final.name>JaxWsBottomUp</final.name>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.ca.data</groupId>
+			<artifactId>data</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${final.name}</finalName>
+<!-- 		<finalName>JaxWsBottomUp</finalName> -->
+		<!-- <defaultGoal>install</defaultGoal> -->
+
+		<!-- <pluginManagement> -->
+		<plugins>
+			<!-- plugin 1-maven war plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.2</version>
+			</plugin>
+
+			<!-- plugin 2-maven compiler plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- plugin 3- apache cxf codegen java2ws goal -->
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-java2ws-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<executions>
+					<execution>
+						<id>generate-wsdl</id>
+						<phase>process-classes</phase>
+						<configuration>
+							<className>tr.com.ca.ws.employe.EmployeeServiceImpl</className>
+							<serviceName>EmployeeService</serviceName>
+							<address>http://localhost:8080/JaxWsBottomUp/EmployeeService</address>
+							<outputFile>${basedir}\generated\resources\wsdl\EmployeeService.wsdl</outputFile>
+
+							<!-- Comment this line if XSD must be embedded in the WSDL -->
+							<!--<argline>-createxsdimports</argline> -->
+
+							<genWsdl>true</genWsdl>
+							<verbose>true</verbose>
+							<skip>false</skip>
+							<genWrapperbean>false</genWrapperbean>
+							<genClient>false</genClient>
+							<genServer>false</genServer>
+						</configuration>
+						<goals>
+							<goal>java2ws</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<!-- </pluginManagement> -->
+	</build>
+</project>

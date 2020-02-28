@@ -1,0 +1,124 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	  <groupId>com.tr.webservice</groupId>
+<!-- 	<parent> -->
+<!-- 		<groupId>com.tr.webservice</groupId> -->
+<!-- 		<artifactId>jax-ws</artifactId> -->
+<!-- 		<version>0.0.1-SNAPSHOT</version> -->
+<!-- 	</parent> -->
+	<artifactId>JaxWsTopDown</artifactId>
+	<name>JaxWsBottomUp Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<java.version>10</java.version>
+		<compileSource>${java.version}</compileSource>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+  
+	<dependencies>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>2.3.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>2.3.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxws-maven-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+<!-- 				<execution> -->
+<!-- 					<id>employee_wsdl</id> -->
+<!-- 					<goals> -->
+<!-- 						<goal>wsimport</goal> -->
+<!-- 					</goals> -->
+<!-- 					<configuration> -->
+<!-- 						<wsdlUrls> -->
+<!-- 							<wsdlUrl>http://localhost:9980/helloworld?wsdl</wsdlUrl> -->
+<!-- 						</wsdlUrls> -->
+<!-- 						<keep>true</keep> -->
+<!-- 						<packageName>jcg.demo.jaxws.client.helloworld</packageName> -->
+<!-- 						<sourceDestDir>${basedir}/src/main/generated</sourceDestDir> -->
+<!-- 					</configuration> -->
+<!-- 				</execution> -->
+					<execution>
+						<id>employee_wsdl</id>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+						<configuration>
+                            <verbose>true</verbose>
+<!--                             <bindingDirectory>src/main/resources/wsdl</bindingDirectory> -->
+<!--                        <bindingDirectory>${schema.location}</bindingDirectory> -->
+<!--                             <bindingFiles> -->
+<!--                                 <bindingFile>EmployeeService.xsd</bindingFile> -->
+<!--                             </bindingFiles> -->
+                            
+<!-- 							<wsdlDirectory>src/main/resources/wsdl</wsdlDirectory> -->
+<!-- 							<wsdlFiles> -->
+<!-- 							    <wsdlFile>a.wsdl</wsdlFile> -->
+<!-- 							    <wsdlFile>b/b.wsdl</wsdlFile> -->
+<!-- 							    <wsdlFile>${project.basedir}/src/mywsdls/c.wsdl</wsdlFile> -->
+<!-- 							    <wsdlFile>${project.basedir}/src/main/resources/wsdls/EmployeeService.wsdl</wsdlFile> -->
+<!-- 							    <wsdlFile>EmployeeService.wsdl</wsdlFile> -->
+<!-- 							</wsdlFiles> -->
+<!-- 						<wsdlLocation>http://example.com/mywebservices/*</wsdlLocation> -->
+
+<!-- 						OK -->
+						<wsdlUrls>
+							<wsdlUrl>http://localhost:8080/JaxWsBottomUp/EmployeeService?wsdl</wsdlUrl>
+						</wsdlUrls>
+							
+							<keep>true</keep>
+							<packageName>com.tr.webservice.topdown</packageName>
+							<sourceDestDir>${basedir}/src/main/generated</sourceDestDir>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<profile>
+			<id>cucumber</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.9</version>
+						<configuration>
+							<includes>
+								<include>**/RunCukesTest.java</include>
+							</includes>
+							<skipAfterFailureCount>1</skipAfterFailureCount>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+  
+</project>

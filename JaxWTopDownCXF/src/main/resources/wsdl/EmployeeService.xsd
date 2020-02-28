@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.3.0 svn-revision#3528ea595bd29309f69172d231bbce272d21035c. --><xs:schema xmlns:tns="http://employee.ws.ca.com.tr/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://employee.ws.ca.com.tr/">
+
+<xs:element name="EmployeeAlreadyExists" type="tns:EmployeeAlreadyExistsException"/>
+
+<xs:element name="EmployeeNotFound" type="tns:EmployeeNotFoundException"/>
+
+<xs:element name="EmployeeRequest" type="tns:employeeRequest"/>
+
+<xs:element name="SOAPException" type="tns:SOAPException"/>
+
+<xs:element name="addEmployee" type="tns:addEmployee"/>
+
+<xs:element name="addEmployeeResponse" type="tns:addEmployeeResponse"/>
+
+<xs:element name="deleteEmployee" type="tns:deleteEmployee"/>
+
+<xs:element name="deleteEmployeeResponse" type="tns:deleteEmployeeResponse"/>
+
+<xs:element name="employee" type="tns:Employee"/>
+
+<xs:element name="findEmployees" type="tns:findEmployees"/>
+
+<xs:element name="findEmployeesResponse" type="tns:findEmployeesResponse"/>
+
+<xs:element name="getEmployee" type="tns:getEmployee"/>
+
+<xs:element name="getEmployeeResponse" type="tns:getEmployeeResponse"/>
+
+<xs:element name="getEmployees" type="tns:getEmployees"/>
+
+<xs:element name="getEmployeesResponse" type="tns:getEmployeesResponse"/>
+
+<xs:element name="updateEmployee" type="tns:updateEmployee"/>
+
+<xs:element name="updateEmployeeResponse" type="tns:updateEmployeeResponse"/>
+
+<xs:complexType name="Employee">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="name" type="xs:string"/>
+<xs:element name="status" type="tns:status"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateEmployee">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="name" type="xs:string"/>
+<xs:element name="status" type="tns:status"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="updateEmployeeResponse">
+<xs:sequence>
+<xs:element name="result" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="EmployeeNotFoundException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getEmployees">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getEmployeesResponse">
+<xs:sequence>
+<xs:element name="employee" type="tns:Employee" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getEmployee">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getEmployeeResponse">
+<xs:sequence>
+<xs:element name="employee" type="tns:Employee" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findEmployees">
+<xs:sequence>
+<xs:element name="employeeRequest" type="tns:employeeRequest"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="employeeRequest">
+<xs:sequence>
+<xs:element name="id" type="xs:int" nillable="true" minOccurs="0"/>
+<xs:element name="name" type="xs:string"/>
+<xs:element name="status" type="tns:status" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="findEmployeesResponse">
+<xs:sequence>
+<xs:element name="employee" type="tns:Employee" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="SOAPException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addEmployee">
+<xs:sequence>
+<xs:element name="name" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="addEmployeeResponse">
+<xs:sequence>
+<xs:element name="result" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="EmployeeAlreadyExistsException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteEmployee">
+<xs:sequence>
+<xs:element name="id" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deleteEmployeeResponse">
+<xs:sequence>
+<xs:element name="result" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="status">
+<xs:restriction base="xs:string">
+<xs:enumeration value="ACTIVE"/>
+<xs:enumeration value="STANDBY"/>
+<xs:enumeration value="EXIT"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

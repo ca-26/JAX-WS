@@ -1,0 +1,197 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.tr.webservice</groupId>
+    <artifactId>JaxWTopDownCXF</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>Simple CXF WSDL-first SOAP project using Spring configuration</name>
+    <description>Simple CXF WSDL-first SOAP project using Spring configuration</description>
+    
+	<properties>
+		<java.version>10</java.version>
+		<compileSource>${java.version}</compileSource>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>3.3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>3.3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.1.10.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>3.3.4</version>
+                <executions>
+                    <execution>
+	                    <id>generate-sources</id>
+	                    <phase>generate-sources</phase>
+<!--                         <configuration> -->
+<!--                         	<encoding>UTF-8</encoding> -->
+<!--                             <sourceRoot> -->
+<!--                                 target/generated-sources -->
+<!--                             </sourceRoot> -->
+<!--                             <wsdlOptions> -->
+<!--                                 <wsdlOption> -->
+<!--                                     <wsdl> -->
+<!--                                        src/main/webapp/WEB-INF/wsdl/HelloWorld.wsdl -->
+<!--                                     </wsdl> -->
+<!--                                     <wsdlLocation>classpath:HelloWorld.wsdl</wsdlLocation> -->
+<!--                                 </wsdlOption> -->
+<!--                             </wsdlOptions> -->
+<!--                         </configuration> -->
+                        <configuration>
+                        	<encoding>UTF-8</encoding>
+<!--                             <sourceRoot>${basedir}/src/main/java</sourceRoot> -->
+<!--                             <sourceRoot>${basedir}/src/main/java/tr/com/ca/ws/employee/generated</sourceRoot> -->
+							
+<!-- 							<sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot> -->
+							<sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+                            <wsdlOptions>
+                                <wsdlOption>      
+<!--                                 <serviceName>MyWSDLService</serviceName> -->
+<!-- 									<bindingFiles> -->
+<!-- 										<bindingFile>src/main/resources/wsdl/EmployeeService.xsd</bindingFile> -->
+<!-- 									</bindingFiles> -->
+                                
+<!-- 								<wsdlRoot>${basedir}/src/main/resources/wsdl</wsdlRoot> -->
+<!-- 								<includes> -->
+<!-- 									<include>*Service.wsdl</include> -->
+<!-- 								</includes> -->
+
+<!--                                <wsdl> -->
+<!--                                   src/main/resources/wsdl/HelloWorld.wsdl -->
+<!--                                </wsdl> -->
+
+
+<!--                                     <wsdl xsi:schemaLocation="src/main/resources/wsdl/EmployeeService.xsd"> -->
+<!--                                     <wsdl xsi:schemaLocation="{http://employee.ws.ca.com.tr/} {src/main/resources/wsdl/EmployeeService.xsd}"> -->
+<!--                                     	src/main/resources/wsdl/EmployeeService.wsdl -->
+<!--                                     </wsdl> -->
+
+<!--                                <wsdl>src/main/resources/wsdl/EmployeeService.wsdl</wsdl> -->
+<!--                                <wsdlLocation>classpath:EmployeeService.wsdl</wsdlLocation> -->
+
+<!-- 								#### Local WSDL Location :  #### -->
+                                    <wsdl>src/main/resources/wsdl/EmployeeServiceWithXsdEmbeded.wsdl</wsdl>
+                                    <wsdlLocation>EmployeeServiceWithXsdEmbeded</wsdlLocation>
+									
+									
+<!-- 								#### External WSDL Location : OK #### -->
+<!-- 								<wsdl>http://localhost:8080/JaxWsBottomUp/EmployeeService?wsdl</wsdl> -->
+<!-- 								<wsdlLocation>http://localhost:8080/JaxWsBottomUp/EmployeeService?wsdl</wsdlLocation> -->
+<!-- 								<serviceName>EmployeeService</serviceName> -->
+                                    
+                                    
+	                                <extraargs>
+<!-- 	                                    <extraarg>-validate</extraarg> -->
+	                                    <extraarg>-client</extraarg>
+<!-- 	                                    <extraarg>-server</extraarg> -->
+	                                    <extraarg>-verbose</extraarg>
+	                                    <extraarg>-xjc-verbose</extraarg>
+	                                    <extraarg>-p</extraarg>
+	                               		<extraarg>tr.com.ca.ws.employee</extraarg>
+<!-- 	                                <extraarg>com.tr.webservice.employe.generated</extraarg> -->
+<!--                                    <extraarg>-p</extraarg> -->
+<!-- 									<extraarg>http://employee.webservice.tr.com/=tr.com.ca.ws.employee.generated</extraarg> -->
+	                                </extraargs>
+                                </wsdlOption>
+                            </wsdlOptions>
+<!--						<additionalJvmArgs>-Djavax.xml.accessExternalDTD=all</additionalJvmArgs> -->
+                        </configuration>
+<!--                         <configuration> -->
+<!--                         	<encoding>UTF-8</encoding> -->
+<!--                             <sourceRoot> -->
+<!--                                 src/main/generated -->
+<!--                             </sourceRoot> -->
+<!--                             <wsdlOptions> -->
+<!--                                 <wsdlOption> -->
+<!--                                     <wsdl> -->
+<!--                                        src/main/resources/wsdl/EmployeeService.wsdl -->
+<!--                                     </wsdl> -->
+<!--                                     <wsdlLocation>classpath:EmployeeService.wsdl</wsdlLocation> -->
+<!--                                 </wsdlOption> -->
+<!--                             </wsdlOptions> -->
+<!--                         </configuration> -->
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <!-- mvn clean install tomcat7:run to deploy
+                    Look for "Running war on http://xxx" and
+                    "Setting the server's publish address to be /yyy"
+                    in console output; WSDL browser address will be
+                    concatenation of the two: http://xxx/yyy?wsdl
+                    -->
+                    <groupId>org.apache.tomcat.maven</groupId>
+                    <artifactId>tomcat7-maven-plugin</artifactId>
+                    <version>2.0</version>
+                    <executions>
+                        <execution>
+                            <id>start-tomcat</id>
+                            <goals>
+                                <goal>run-war</goal>
+                            </goals>
+                            <phase>pre-integration-test</phase>
+                            <configuration>
+                                <port>${test.server.port}</port>
+                                <path>/webservice</path>
+                                <fork>true</fork>
+                                <useSeparateTomcatClassLoader>true</useSeparateTomcatClassLoader>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-eclipse-plugin</artifactId>
+                    <configuration>
+                        <projectNameTemplate>[artifactId]-[version]</projectNameTemplate>
+                        <wtpmanifest>true</wtpmanifest>
+                        <wtpapplicationxml>true</wtpapplicationxml>
+                        <wtpversion>2.0</wtpversion>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

@@ -1,0 +1,22 @@
+
+#### When using wsdl2java if WSDL file use external XSD and files are on local you cannot specify XSD location with CXF.
+Solution : Copy the content of the XSD in the type section of the WSDL file.
+
+
+	Example WSDL:
+		<types>
+			<!-- <xsd:schema> -->
+			<!-- <xsd:import namespace="http://webservice.tr.com/" schemaLocation="http://localhost:8080/JaxWsBottomUp/EmployeeService?xsd=1"/> -->
+			<!-- </xsd:schema> -->
+		
+			<xs:schema xmlns:tns="http://webservice.tr.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webservice.tr.com/">
+				<xs:element name="EmployeeAlreadyExists"
+					type="tns:EmployeeAlreadyExistsException" />
+			
+				<xs:element name="EmployeeRequest"
+					type="tns:employeeRequest" />
+			:
+			:
+			:
+		</types>
+

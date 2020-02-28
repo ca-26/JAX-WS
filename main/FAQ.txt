@@ -1,0 +1,5 @@
+######
+First time building sub modules of a multi maven project : Error cannot find main project descriptor on repository
+Solution : first build the main project to install his descriptor on themaven repo.
+
+
